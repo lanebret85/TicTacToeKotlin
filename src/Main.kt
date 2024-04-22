@@ -23,7 +23,7 @@ fun main() {
             break
         }
         placePiece(gameBoard, "cpu")
-        result = checkWinner(cpuPositions, playerPositions)
+        result = checkWinner(playerPositions, cpuPositions)
         if (result.isNotEmpty()) {
             println(result)
             break
