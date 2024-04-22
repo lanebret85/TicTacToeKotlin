@@ -4,6 +4,16 @@ import java.util.Scanner
 private var playerPositions = mutableListOf<Int>()
 private var cpuPositions = mutableListOf<Int>()
 
+val row1 = listOf(1, 2, 3)
+val row2 = listOf(4, 5, 6)
+val row3 = listOf(7, 8, 9)
+val col1 = listOf(1, 4, 7)
+val col2 = listOf(2, 5, 8)
+val col3 = listOf(3, 6, 9)
+val cross1 = listOf(1, 5, 9)
+val cross2 = listOf(3, 5, 7)
+val winCombos = arrayListOf(row1, row2, row3, col1, col2, col3, cross1, cross2)
+
 fun main() {
     val gameBoard = arrayOf(
         arrayOf(' ', '|', ' ', '|', ' '),
@@ -15,23 +25,26 @@ fun main() {
 
     printGameBoard(gameBoard)
 
-    while (true) {
+    while (!checkWinner(playerPositions, cpuPositions) && (playerPositions.size + cpuPositions.size) != 9) {
         placePiece(gameBoard, "player")
-        var result = checkWinner(playerPositions, cpuPositions)
-        if (result.isNotEmpty()) {
-            println(result)
-            break
+        if (!checkWinner(playerPositions, cpuPositions) && (playerPositions.size + cpuPositions.size) != 9) {
+            placePiece(gameBoard, "cpu")
+            printGameBoard(gameBoard)
         }
-        placePiece(gameBoard, "cpu")
-        result = checkWinner(playerPositions, cpuPositions)
-        if (result.isNotEmpty()) {
-            println(result)
-            break
-        }
-        printGameBoard(gameBoard)
     }
 
     printGameBoard(gameBoard)
+
+    for(combo in winCombos) {
+        if (playerPositions.containsAll(combo)) {
+            println("Congratulations! You won the game!")
+        } else if (cpuPositions.containsAll(combo)) {
+            println("The CPU won. Sorry :(")
+        }
+    }
+    if ((playerPositions.size + cpuPositions.size) == 9) {
+        println("CAT!")
+    }
 }
 
 private fun printGameBoard(gameBoard: Array<Array<Char>>) {
@@ -83,27 +96,11 @@ private fun chooseSpace(space: Int, gameBoard: Array<Array<Char>>, token: Char) 
     }
 }
 
-private fun checkWinner(playerPositions: List<Int>, cpuPositions: List<Int>): String {
-    val row1 = listOf(1, 2, 3)
-    val row2 = listOf(4, 5, 6)
-    val row3 = listOf(7, 8, 9)
-    val col1 = listOf(1, 4, 7)
-    val col2 = listOf(2, 5, 8)
-    val col3 = listOf(3, 6, 9)
-    val cross1 = listOf(1, 5, 9)
-    val cross2 = listOf(3, 5, 7)
-    val winCombos = arrayListOf(row1, row2, row3, col1, col2, col3, cross1, cross2)
-
+private fun checkWinner(playerPositions: List<Int>, cpuPositions: List<Int>): Boolean {
     for(combo in winCombos) {
-        if (playerPositions.containsAll(combo)) {
-            return "Congratulations! You won the game!"
-        } else if (cpuPositions.containsAll(combo)) {
-            return "The CPU won. Sorry :("
+        if (playerPositions.containsAll(combo) || cpuPositions.containsAll(combo)) {
+            return true
         }
     }
-    if ((playerPositions.size + cpuPositions.size) == 9) {
-        return "CAT!"
-    }
-
-    return ""
+    return false
 }
