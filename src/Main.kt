@@ -3,15 +3,15 @@ import java.util.*
 private var playerPositions = mutableListOf<Int>()
 private var cpuPositions = mutableListOf<Int>()
 
-val row1 = listOf(1, 2, 3)
-val row2 = listOf(4, 5, 6)
-val row3 = listOf(7, 8, 9)
-val col1 = listOf(1, 4, 7)
-val col2 = listOf(2, 5, 8)
-val col3 = listOf(3, 6, 9)
-val cross1 = listOf(1, 5, 9)
-val cross2 = listOf(3, 5, 7)
-val winCombos = arrayListOf(row1, row2, row3, col1, col2, col3, cross1, cross2)
+private val row1 = listOf(1, 2, 3)
+private val row2 = listOf(4, 5, 6)
+private val row3 = listOf(7, 8, 9)
+private val col1 = listOf(1, 4, 7)
+private val col2 = listOf(2, 5, 8)
+private val col3 = listOf(3, 6, 9)
+private val cross1 = listOf(1, 5, 9)
+private val cross2 = listOf(3, 5, 7)
+private val winCombos = arrayListOf(row1, row2, row3, col1, col2, col3, cross1, cross2)
 
 fun main() {
     val gameBoard = arrayOf(
