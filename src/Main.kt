@@ -1,5 +1,4 @@
-import java.util.Random
-import java.util.Scanner
+import java.util.*
 
 private var playerPositions = mutableListOf<Int>()
 private var cpuPositions = mutableListOf<Int>()
@@ -62,11 +61,24 @@ private fun placePiece(gameBoard: Array<Array<Char>>, user: String) {
     if (user == "player") {
         token = 'X'
         val scanner = Scanner(System.`in`)
-        println("Select a space to place your piece: ")
-        var playerPos = scanner.nextInt()
-        while (playerPositions.contains(playerPos) || cpuPositions.contains(playerPos)) {
-            println("Invalid placement. Try again.")
-            playerPos = scanner.nextInt()
+        var playerPos = 0
+        while (true) {
+            try {
+                println("Select a space to place your piece: ")
+                playerPos = scanner.nextInt()
+                while (playerPositions.contains(playerPos) || cpuPositions.contains(playerPos)) {
+                    println("Invalid placement. Try again.")
+                    playerPos = scanner.nextInt()
+                }
+                if (playerPos in 1..9) {
+                    break
+                } else {
+                    println("Invalid space. You must enter a number between 1 and 9.")
+                }
+            } catch (e: InputMismatchException) {
+                println("Invalid space. You must enter a number between 1 and 9.")
+                scanner.next()
+            }
         }
         chooseSpace(playerPos, gameBoard, token)
         playerPositions.add(playerPos)
